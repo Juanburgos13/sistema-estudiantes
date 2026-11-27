@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 const fs = require("fs");
 const path = require("path");
+const { validateStudent } = require("../utils/studentValidation");
 
 const dataPath = path.join(__dirname, "../data/students.json");
 
@@ -106,6 +107,15 @@ router.delete("/:id", (req, res) => {
 // Registrar un estudiante
 router.post("/", (req, res) => {
     const { name, email, course } = req.body;
+
+    const { isValid, errors } = validateStudent({ name, email, course });
+
+    if (!isValid) {
+        return res.status(400).json({
+            message: "Datos inválidos",
+            errors
+        });
+    }
 
     const students = getStudents();
 

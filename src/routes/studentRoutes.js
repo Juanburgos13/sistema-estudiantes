@@ -20,6 +20,16 @@ function saveStudents(students) {
     );
 }
 
+// Consultar todos los estudiantes
+router.get("/", (req, res) => {
+    const students = getStudents();
+
+    res.status(200).json({
+        total: students.length,
+        students
+    });
+});
+
 // Registrar un estudiante
 router.post("/", (req, res) => {
     const { name, email, course } = req.body;

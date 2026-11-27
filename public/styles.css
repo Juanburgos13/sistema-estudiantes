@@ -65,3 +65,24 @@ button {
 button:hover {
     background: #1d4ed8;
 }
+
+
+.student-card {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 18px;
+    margin-bottom: 12px;
+}
+
+.student-card h3 {
+    color: #1d4ed8;
+    margin-bottom: 10px;
+}
+
+.student-card p {
+    margin-bottom: 6px;
+    color: #475569;
+}
+
+    

@@ -5,5 +5,19 @@
     "email": "juan@gmail.com",
     "course": "Ingeniería de Software",
     "createdAt": "2026-11-27T16:02:14.926Z"
+  },
+  {
+    "id": "1795796005156",
+    "name": "juan",
+    "email": "juan@gmail.com",
+    "course": "ingenieria de software",
+    "createdAt": "2026-11-27T16:13:25.156Z"
+  },
+  {
+    "id": "1795796118961",
+    "name": "PEdro caceres",
+    "email": "Caceres@gmail.com",
+    "course": "Ingeniería de Software",
+    "createdAt": "2026-11-27T16:15:18.961Z"
   }
 ]

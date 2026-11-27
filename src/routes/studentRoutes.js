@@ -30,6 +30,49 @@ router.get("/", (req, res) => {
     });
 });
 
+router.put("/:id", (req, res) => {
+    try {
+        const { id } = req.params;
+        const { name, email, course } = req.body;
+
+        const students = getStudents();
+        const studentIndex = students.findIndex(
+            student => student.id === id
+        );
+
+        if (studentIndex === -1) {
+            return res.status(404).json({
+                message: "Estudiante no encontrado"
+            });
+        }
+
+        if (!name || !email || !course) {
+            return res.status(400).json({
+                message: "Todos los campos son obligatorios"
+            });
+        }
+
+        students[studentIndex] = {
+            ...students[studentIndex],
+            name,
+            email,
+            course,
+            updatedAt: new Date().toISOString()
+        };
+
+        saveStudents(students);
+
+        res.status(200).json({
+            message: "Estudiante actualizado correctamente",
+            student: students[studentIndex]
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: "Error al actualizar el estudiante"
+        });
+    }
+});
+
 // Registrar un estudiante
 router.post("/", (req, res) => {
     const { name, email, course } = req.body;

@@ -73,6 +73,36 @@ router.put("/:id", (req, res) => {
     }
 });
 
+router.delete("/:id", (req, res) => {
+    try {
+        const { id } = req.params;
+        const students = getStudents();
+
+        const studentIndex = students.findIndex(
+            student => student.id === id
+        );
+
+        if (studentIndex === -1) {
+            return res.status(404).json({
+                message: "Estudiante no encontrado"
+            });
+        }
+
+        const deletedStudent = students.splice(studentIndex, 1)[0];
+
+        saveStudents(students);
+
+        res.status(200).json({
+            message: "Estudiante eliminado correctamente",
+            student: deletedStudent
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: "Error al eliminar el estudiante"
+        });
+    }
+});
+
 // Registrar un estudiante
 router.post("/", (req, res) => {
     const { name, email, course } = req.body;

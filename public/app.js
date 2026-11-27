@@ -105,8 +105,37 @@ async function loadStudents() {
                     alert("Error: " + error.message);
                 }
             });
+            
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Eliminar";
+            deleteButton.style.backgroundColor = "#dc2626";
 
-            card.append(name, email, course, editButton);
+            deleteButton.addEventListener("click", async () => {
+                const confirmation = confirm(
+                    `¿Seguro que deseas eliminar a ${student.name}?`
+                );
+
+                if (!confirmation) return;
+
+                try {
+                    const response = await fetch(`/api/students/${student.id}`, {
+                        method: "DELETE"
+                    });
+
+                    const result = await response.json();
+
+                    if (!response.ok) {
+                        throw new Error(result.message);
+                    }
+
+                    alert(result.message);
+                    loadStudents();
+                } catch (error) {
+                    alert("Error: " + error.message);
+                }
+            });
+
+            card.append(name, email, course, editButton, deleteButton);
             studentList.appendChild(card);
         });
 

@@ -67,7 +67,46 @@ async function loadStudents() {
             const course = document.createElement("p");
             course.textContent = student.course;
 
-            card.append(name, email, course);
+            const editButton = document.createElement("button");
+            editButton.textContent = "Editar";
+
+            editButton.addEventListener("click", async () => {
+                const newName = prompt("Nombre:", student.name);
+                if (newName === null) return;
+
+                const newEmail = prompt("Correo:", student.email);
+                if (newEmail === null) return;
+
+                const newCourse = prompt("Carrera:", student.course);
+                if (newCourse === null) return;
+
+                try {
+                    const response = await fetch(`/api/students/${student.id}`, {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            name: newName.trim(),
+                            email: newEmail.trim(),
+                            course: newCourse.trim()
+                        })
+                    });
+
+                    const result = await response.json();
+
+                    if (!response.ok) {
+                        throw new Error(result.message);
+                    }
+
+                    alert(result.message);
+                    loadStudents();
+                } catch (error) {
+                    alert("Error: " + error.message);
+                }
+            });
+
+            card.append(name, email, course, editButton);
             studentList.appendChild(card);
         });
 
